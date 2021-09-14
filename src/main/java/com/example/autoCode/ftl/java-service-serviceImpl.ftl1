@@ -1,0 +1,147 @@
+package ${serviceImplPackage};
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import ${daoPackage}.${className?cap_first}Mapper;
+import ${entityPackage}.${className?cap_first};
+import ${servicePackage}.${className?cap_first}Service;
+import org.springframework.http.ResponseEntity;
+import ${basePackage}.dto.*;
+import ${basePackage}.vo.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+
+/**
+* ${moduleName}方法实现类
+* Created by 代码自动生成.
+* 时间:${.now?string("yyyy-MM-dd HH:mm:ss")}
+*/
+@Service
+@Transactional
+public class ${className?cap_first}ServiceImpl implements ${className?cap_first}Service {
+
+    @Autowired
+    private ${className?cap_first}Mapper ${className}Mapper;
+
+    @Override
+    public ResponseEntity findPage${className?cap_first}(${className?cap_first}PageDto dto) {
+        PageResponseEntity pageResponseEntity=new PageResponseEntity();
+        PageHelper.startPage(dto.getPageNumber(),dto.getPageSize());
+        ${className?cap_first} ${className}=new ${className?cap_first}();
+        BeanUtils.copyProperties(dto,${className});
+        List<${className?cap_first}> list = ${className}Mapper.select${className?cap_first}s(${className});
+        PageInfo<${className?cap_first}> info=new PageInfo<>(list);
+        pageResponseEntity.setTotle(info.getTotal());
+        pageResponseEntity.setPageSize(dto.getPageSize());
+        pageResponseEntity.setPageNumber(dto.getPageNumber());
+        //转换vo出去
+        List<${className?cap_first}PageVo> vos = info.getList().stream().map(l -> {
+            ${className?cap_first}PageVo vo = new ${className?cap_first}PageVo();
+            BeanUtils.copyProperties(l, vo);
+            return vo;
+        }).collect(Collectors.toList());
+        pageResponseEntity.setPages(vos);
+        return ResponseEntity.ok(pageResponseEntity);
+    }
+
+    @Override
+    public ResponseEntity getAll() {
+        List<${className?cap_first}> ${className}s = ${className}Mapper.select${className?cap_first}s(null);
+        return ResponseEntity.ok(${className}s);
+    }
+        
+    <#if idNumber!=0>
+    @Override
+    public ResponseEntity findAllBy${className?cap_first}(${className?cap_first} ${className}) {
+        List<${className?cap_first}> ${className}s = ${className}Mapper.select${className?cap_first}s(${className});
+        //转换vo出去
+        List<${className?cap_first}PageVo> vos = ${className}s.stream().map(l -> {
+        ${className?cap_first}PageVo vo = new ${className?cap_first}PageVo();
+        BeanUtils.copyProperties(l, vo);
+        return vo;
+        }).collect(Collectors.toList());
+        return ResponseEntity.ok(vos);
+    }
+
+    @Override
+    public ${className?cap_first} find${className?cap_first}(${className?cap_first} ${className}) {
+        List<${className?cap_first}> list = ${className}Mapper.select${className?cap_first}s(${className});
+        if(!list.isEmpty()){
+            return list.get(0);
+        }
+        return null;
+    }
+
+    @Override
+    public ResponseEntity insert(${className?cap_first}SaveDto dto) {
+        ${className?cap_first} ${className}=new ${className?cap_first}();
+        BeanUtils.copyProperties(dto,${className});<#list data as d><#if d.id==true && d.extpa==false && d.type=="Long">
+        //todo 此处报错的原因是数据库设计不合理，主键是数据类型，但不是自增的，请修改数据结构为自增类型，如果确实需要数据不自增，请修错误代码！</#if><#if d.id==true && d.extpa==false && d.type=="Integer">
+        //todo 此处报错的原因是数据库设计不合理，主键是数据类型，但不是自增的，请修改数据结构为自增类型，如果确实需要数据不自增，请修错误代码！</#if></#list>
+        <#list data as d><#if d.id==true && d.extpa==false && d.type=="Long">//</#if><#if d.id==true && d.extpa==false && d.type=="Integer">//</#if><#if d.id==true && d.extpa==false >${className}.set${d.beanName?cap_first}(UuidUtild.getUUID());</#if></#list>
+        try{
+            ${className}Mapper.insert(${className});
+            return ResponseEntity.ok();
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.error(500,e.getCause().getMessage());
+        }
+    }
+
+    @Override
+    public ResponseEntity update(${className?cap_first}UpdateDto dto) {
+        ${className?cap_first} ${className}=new ${className?cap_first}();
+        BeanUtils.copyProperties(dto,${className});
+        try{
+            ${className}Mapper.update(${className});
+            return ResponseEntity.ok();
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.error(500,e.getCause().getMessage());
+        }
+    }
+
+    @Override
+    public ResponseEntity deleteById(<#list data as d><#if d.id==true>${d.type} ${d.beanName}</#if></#list>) {
+        try{
+            ${className}Mapper.delete(${className});
+            return ResponseEntity.ok();
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.error(500,e.getCause().getMessage());
+        }
+    }
+
+    @Override
+    public ResponseEntity deleteAll(String ids) {
+        try{
+            String[] strings = ids.split(",");
+            List<String> list=new ArrayList<>();
+            for (int i = 0; i <strings.length ; i++) {
+                list.add(strings[i]);
+            }
+            ${className}Mapper.deleteAll(list);
+            return ResponseEntity.ok();
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.error(500,e.getCause().getMessage());
+        }
+    }
+
+    @Override
+    public ResponseEntity getById(<#list data as d><#if d.id==true>${d.type} ${d.beanName}</#if></#list>) {
+        ${className?cap_first} ${className}=new ${className?cap_first}();
+        ${className}.set<#list data as d><#if d.id==true>${d.beanName?cap_first}</#if></#list>(<#list data as d><#if d.id==true>${d.beanName}</#if></#list>);
+        List<${className?cap_first}> ${className}s = ${className}Mapper.select${className?cap_first}s(${className});
+        if(${className}s.isEmpty()){
+            return ResponseEntity.ok();
+        }
+        return ResponseEntity.ok(${className}s.get(0));
+    }</#if>
+}
