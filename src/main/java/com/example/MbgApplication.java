@@ -13,7 +13,7 @@ import java.util.List;
  * 如果是h2数据库需要启动spring boot，如果是mysql数据库则不需要直接可以生成代码
  */
 //@SpringBootApplication
-public class SpringgeneratorApplication {
+public class MbgApplication {
 
     public static void main(String[] args) throws Exception {
 //        SpringApplication.run(SpringgeneratorApplication.class, args);
