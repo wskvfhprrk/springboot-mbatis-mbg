@@ -1,23 +1,14 @@
 package com.example.autoCode;
 
-import java.util.List;
-
 public class CreateEntity {
 
-    private String databaseName;
     private Entity entity;
-    private List<Entity.data> dataList;
 
-    public CreateEntity(String databaseName, Entity entity,List<Entity.data> dataList) {
-        this.databaseName = databaseName;
+    public CreateEntity( Entity entity) {
         this.entity = entity;
-        this.dataList=dataList;
     }
 
     public Entity createEntity(Entity entity) {
-        if (dataList.isEmpty()) {
-            return null;
-        }
         // 原来表名
         entity.setTableName(entity.getTableName());
         // 模块名称---解释使用
@@ -38,11 +29,6 @@ public class CreateEntity {
         entity.setServiceImplPackage(AutoCodeConstant.basePackage + "." + AutoCodeConstant.serviceImpl);
         // controller类包名
         entity.setControllerPackage(AutoCodeConstant.basePackage + "." + AutoCodeConstant.controller);
-        List<Entity.data> data = dataList;
-        entity.setData(data);
-        //计算主键个数
-        long count = data.stream().filter(Entity.data::getId).count();
-        entity.setIdNumber((int) count);
         return entity;
     }
 
