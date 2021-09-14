@@ -16,18 +16,7 @@ public class CommentGenerator extends DefaultCommentGenerator {
     private static final String EXAMPLE_SUFFIX = "Example";
     private static final String MAPPER_SUFFIX = "Mapper";
     private static final String API_MODEL_PROPERTY_FULL_CLASS_NAME = "io.swagger.annotations.ApiModelProperty";
-    private Properties properties;
-    private Properties systemPro;
-    private boolean suppressDate;
-    private boolean suppressAllComments;
-    private String currentDateStr;
 
-    public CommentGenerator() {
-        super();
-        properties = new Properties();
-        systemPro = System.getProperties();
-        currentDateStr = (new SimpleDateFormat("yyyy-MM-dd")).format(new Date());
-    }
 
     @Override
     public void addFieldComment(Field field, IntrospectedTable introspectedTable,
@@ -47,8 +36,6 @@ public class CommentGenerator extends DefaultCommentGenerator {
     @Override
     public void addConfigurationProperties(Properties properties) {
         //使用geratorConfig.xml的配置项
-        this.suppressDate= Boolean.parseBoolean(properties.getProperty("suppressDate"));
-        this.suppressAllComments=Boolean.parseBoolean(properties.getProperty("suppressAllComments"));
     }
 
     /**
