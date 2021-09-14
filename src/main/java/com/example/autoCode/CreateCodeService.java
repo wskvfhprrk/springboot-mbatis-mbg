@@ -89,25 +89,25 @@ public class CreateCodeService {
             addOutFile.append(AutoCodeUtil.getPathByCom(AutoCodeConstant.basePackage +"."+ pockName));
             if (pockName.equals("dto") || pockName.equals("vo") || pockName.equals("dao")) {
                 AutoCodeUtil.getPath(addOutFile.toString());
-                addOutFile.append(AutoCodeUtil.captureName(entity.getClassName()) + AutoCodeUtil.captureName(fileName) + "." + suffix);
+                addOutFile.append(AutoCodeUtil.captureName(entity.className()) + AutoCodeUtil.captureName(fileName) + "." + suffix);
             } else if (pockName.equals("service") && "service".equals(fileName)) {
                 AutoCodeUtil.getPath(addOutFile.toString());
-                addOutFile.append(AutoCodeUtil.captureName(entity.getClassName()) + AutoCodeUtil.captureName(pockName) + "." + suffix);
+                addOutFile.append(AutoCodeUtil.captureName(entity.className()) + AutoCodeUtil.captureName(pockName) + "." + suffix);
             } else if (pockName.equals("service") && "serviceImpl".equals(fileName)) {
                 addOutFile.append("Impl/");
                 AutoCodeUtil.getPath(addOutFile.toString());
-                addOutFile.append(AutoCodeUtil.captureName(entity.getClassName()) + AutoCodeUtil.captureName(fileName) + "." + suffix);
+                addOutFile.append(AutoCodeUtil.captureName(entity.className()) + AutoCodeUtil.captureName(fileName) + "." + suffix);
             } else if (pockName.equals("entity")) {
                 AutoCodeUtil.getPath(addOutFile.toString());
-                addOutFile.append(AutoCodeUtil.captureName(entity.getClassName()) + "." + suffix);
+                addOutFile.append(AutoCodeUtil.captureName(entity.className()) + "." + suffix);
             } else {
                 AutoCodeUtil.getPath(addOutFile.toString());
-                addOutFile.append(AutoCodeUtil.captureName(entity.getClassName()) + AutoCodeUtil.captureName(pockName) + "." + suffix);
+                addOutFile.append(AutoCodeUtil.captureName(entity.className()) + AutoCodeUtil.captureName(pockName) + "." + suffix);
             }
         } else if (suffix.equals("vue")) {
             addOutFile.append(AutoCodeConstant.vuePagePath );
             AutoCodeUtil.getPath(addOutFile.toString());
-            addOutFile.append(entity.getClassName()+"/");
+            addOutFile.append(entity.className()+"/");
             AutoCodeUtil.getPath(addOutFile.toString());
             addOutFile.append(pockName);
             addOutFile.append(".vue");
@@ -117,10 +117,10 @@ public class CreateCodeService {
             AutoCodeUtil.getPath(addOutFile.toString());
             addOutFile.append("/api/");
             AutoCodeUtil.getPath(addOutFile.toString());
-            addOutFile.append(entity.getClassName());
+            addOutFile.append(entity.className());
             addOutFile.append(".js");
         }
         AutoCodeUtil.getNewFile(addPathAndName.toString(), entity, addOutFile.toString());
-//        System.out.println("-------------------------------------" + AutoCodeUtil.captureName(entity.getClassName()) + "." + suffix + "生成完毕------------------------------------");
+//        System.out.println("-------------------------------------" + AutoCodeUtil.captureName(entity.className()) + "." + suffix + "生成完毕------------------------------------");
     }
 }

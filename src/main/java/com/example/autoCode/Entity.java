@@ -1,6 +1,7 @@
 package com.example.autoCode;
 
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.Accessors;
 
 import java.util.List;
 
@@ -8,6 +9,11 @@ import java.util.List;
  * 有用的数据库字段名称
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@With
+@Accessors(fluent = true)
 public class Entity {
 
     private String tableName;
@@ -27,31 +33,13 @@ public class Entity {
      */
     private Integer idNumber;
 
-    public Entity() {
-    }
-
-    public Entity(String tableName, String moduleName) {
-        this.tableName = tableName;
-        this.moduleName = moduleName;
-    }
-
-    public Entity(String tableName, String moduleName, String className, String basePackage, String entityPackage, String dtoPackage, String voPackage, String daoPackage, String servicePackage, String serviceImplPackage, String controllerPackage, List<Entity.data> data, Integer idNumber) {
-        this.tableName = tableName;
-        this.moduleName = moduleName;
-        this.className = className;
-        this.basePackage = basePackage;
-        this.entityPackage = entityPackage;
-        this.dtoPackage = dtoPackage;
-        this.voPackage = voPackage;
-        this.daoPackage = daoPackage;
-        this.servicePackage = servicePackage;
-        this.serviceImplPackage = serviceImplPackage;
-        this.controllerPackage = controllerPackage;
-        this.data = data;
-        this.idNumber = idNumber;
-    }
 
     @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @With
+    @Accessors(fluent = true)
     public static class data {
         /**
          * 数据库备注——中文
