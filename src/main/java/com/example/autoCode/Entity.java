@@ -15,7 +15,6 @@ import java.util.List;
 @With
 public class Entity {
 
-    private String tableName;
     private String moduleName;
     private String className;
     private String basePackage;

@@ -14,7 +14,7 @@ public class ${className?cap_first}DaoSql {
     public static String select${className?cap_first}s(final ${className?cap_first} ${className}){
         return new SQL(){{
             SELECT("<#list data as d><#if d_index==0>a.${d.columnName}<#else> ,a.${d.columnName}</#if></#list>");
-            FROM("${tableName} a");
+            FROM("${className} a");
             <#list data as d><#if d.type=='String'>
             if(${className}!=null && StringUtils.isNotBlank(${className}.get${d.beanName?cap_first}())){
                 WHERE("a.${d.columnName?cap_first} like CONCAT('%',${r"#{"}${d.beanName}},'%')");
@@ -27,7 +27,7 @@ public class ${className?cap_first}DaoSql {
 
     public static String insert(final ${className?cap_first} ${className}){
         return new SQL(){{
-            INSERT_INTO("${tableName}");
+            INSERT_INTO("${className}");
             <#list data as d><#if d.type=='String'>
             if(StringUtils.isNotBlank(${className}.get${d.beanName?cap_first}())){<#else>
             if(${className}.get${d.beanName?cap_first}()!=null && ${className}.get${d.beanName?cap_first}().toString().length()>0){</#if>
@@ -40,7 +40,7 @@ public class ${className?cap_first}DaoSql {
 
     public static String update(final ${className?cap_first} ${className}){
         return new SQL(){{
-            UPDATE("${tableName}");
+            UPDATE("${className}");
             <#list data as d><#if d.type=='String'>
                 if(StringUtils.isNotBlank(${className}.get${d.beanName?cap_first}())){<#else>
                 if(${className}.get${d.beanName?cap_first}()!=null && ${className}.get${d.beanName?cap_first}().toString().length()>0){</#if><#assign str = "#\{"/>
@@ -58,7 +58,7 @@ public class ${className?cap_first}DaoSql {
 
     public static String delete(final ${className?cap_first} ${className}){
         return new SQL(){{
-            DELETE_FROM("${tableName}");
+            DELETE_FROM("${className}");
             <#list data as d><#if d.type=='String'>
                 if(StringUtils.isNotBlank(${className}.get${d.beanName?cap_first}())){<#else>
                 if(${className}.get${d.beanName?cap_first}()!=null && ${className}.get${d.beanName?cap_first}().toString().length()>0){</#if><#assign str = "#\{"/>

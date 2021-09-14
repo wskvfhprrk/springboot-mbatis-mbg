@@ -4,14 +4,14 @@ import lombok.Data;
 
 @Data
 public class TableName {
-    private String tableName;
+    private String className;
     private String moduleName;
 
     public TableName() {
     }
 
-    public TableName(String tableName, String moduleName) {
-        this.tableName = tableName;
+    public TableName(String className, String moduleName) {
+        this.className = className;
         this.moduleName = moduleName;
     }
 }

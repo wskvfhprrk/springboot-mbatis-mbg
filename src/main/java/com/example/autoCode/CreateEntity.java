@@ -9,12 +9,8 @@ public class CreateEntity {
     }
 
     public Entity createEntity(Entity entity) {
-        // 原来表名
-        entity.setTableName(entity.getTableName());
         // 模块名称---解释使用
         entity.setModuleName(entity.getModuleName());
-        // java类名称(首字母小写)
-        entity.setClassName(AutoCodeUtil.getBeanName(entity.getTableName()));
         // 基础包
         entity.setBasePackage(AutoCodeConstant.basePackage);
         // 实体类包名

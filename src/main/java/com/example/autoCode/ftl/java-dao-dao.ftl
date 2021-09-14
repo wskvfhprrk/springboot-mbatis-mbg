@@ -55,7 +55,7 @@ public interface ${className?cap_first}Dao {
     <#--@SelectProvider(type = ${className?cap_first}DaoSql.class, method = "deleteAll")-->
     @Select("<script>" +
     <#assign str='#\{item}' >
-        "DELETE FROM ${tableName} WHERE <#list data as d><#if d.id=true>${d.columnName} </#if></#list>IN " +
+        "DELETE FROM ${className} WHERE <#list data as d><#if d.id=true>${d.columnName} </#if></#list>IN " +
         "<foreach item='item' index='index' collection='ids' open='(' separator=',' close=')'>${str}</foreach> </script>")
     void deleteAll(@Param("ids") List<String> ids);
 

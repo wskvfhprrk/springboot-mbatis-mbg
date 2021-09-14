@@ -72,7 +72,6 @@ public class CommentGenerator extends DefaultCommentGenerator {
         Entity entity = new Entity()
                 .withData(dataList)
                 .withClassName(introspectedTable.getFullyQualifiedTableNameAtRuntime())
-                .withTableName(introspectedTable.getFullyQualifiedTableNameAtRuntime())
                 .withModuleName(introspectedTable.getRemarks())
                 .withIdNumber(introspectedTable.getPrimaryKeyColumns().size());
         CreateEntity createEntity = new CreateEntity(entity);
