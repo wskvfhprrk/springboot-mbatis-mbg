@@ -47,37 +47,38 @@ public class CommentGenerator extends DefaultCommentGenerator {
     @Override
     public void addModelClassComment(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         //代码自动生成——service和controller
-        Entity entity = new Entity(introspectedTable.getFullyQualifiedTableNameAtRuntime(), introspectedTable.getRemarks());
-        List<Entity.data> dataList=new ArrayList<>();
+        Entity entity = new Entity();
+        List<Entity.data> dataList = new ArrayList<>();
         //把主键参数添加进去——一般主键放在前面
-        introspectedTable.getPrimaryKeyColumns().stream().forEach(c -> {
-            Entity.data data = new Entity.data();
-            data.setCommentName(c.getRemarks());
-            data.setColumnName(c.getJavaProperty());
-            data.setBeanName(AutoCodeUtil.getBeanName(c.getJavaProperty()));
-            data.setType(c.getFullyQualifiedJavaType().getShortName());
-            data.setId(true);//主键
-            data.setExtpa(c.isAutoIncrement());
-            data.setIsNull(c.isNullable());
-            data.setMaximumLength(String.valueOf(c.getLength()));
-            dataList.add(data);
-        });
+        introspectedTable.getPrimaryKeyColumns().stream().forEach(c ->
+                dataList.add(new Entity.data()
+                        .commentName(c.getRemarks())
+                        .columnName(c.getJavaProperty())
+                        .beanName(AutoCodeUtil.getBeanName(c.getJavaProperty()))
+                        .type(c.getFullyQualifiedJavaType().getShortName())
+                        .id(true) //是主键
+                        .extpa(c.isAutoIncrement())
+                        .isNull(c.isNullable())
+                        .maximumLength(String.valueOf(c.getLength()))));
         //其它参数再添加进去
-        introspectedTable.getBaseColumns().stream().forEach(c -> {
-            Entity.data data = new Entity.data();
-            data.setCommentName(c.getRemarks());
-            data.setBeanName(AutoCodeUtil.getBeanName(c.getJavaProperty()));
-            data.setColumnName(c.getJavaProperty());
-            data.setType(c.getFullyQualifiedJavaType().getShortName());
-            data.setId(false);
-            data.setExtpa(false);
-            data.setIsNull(c.isNullable());
-            data.setMaximumLength(String.valueOf(c.getLength()));
-            dataList.add(data);
-        });
-        CreateEntity createEntity = new CreateEntity(introspectedTable.getFullyQualifiedTableNameAtRuntime(), entity, dataList);
+        introspectedTable.getBaseColumns().stream().forEach(c ->
+                dataList.add(new Entity.data()
+                        .commentName(c.getRemarks())
+                        .beanName(AutoCodeUtil.getBeanName(c.getJavaProperty()))
+                        .columnName(c.getJavaProperty())
+                        .type(c.getFullyQualifiedJavaType().getShortName())
+                        .id(false)  //不是主键
+                        .extpa(false)
+                        .isNull(c.isNullable())
+                        .maximumLength(String.valueOf(c.getLength()))));
+        entity
+                .data(dataList)
+                .tableName(introspectedTable.getFullyQualifiedTableNameAtRuntime())
+                .moduleName(introspectedTable.getRemarks())
+                .idNumber(introspectedTable.getPrimaryKeyColumns().size());
+        CreateEntity createEntity = new CreateEntity(entity);
         entity = createEntity.createEntity(entity);
-        CreateCodeService createCodeService=new CreateCodeService();
+        CreateCodeService createCodeService = new CreateCodeService();
         createCodeService.creatCode(entity);
     }
 

@@ -2,47 +2,38 @@ package com.example.autoCode;
 
 import java.util.List;
 
+/**
+ * 组合freemarker生成代码所需要的数据——Entity附加类
+ */
 public class CreateEntity {
 
-    private String databaseName;
     private Entity entity;
-    private List<Entity.data> dataList;
 
-    public CreateEntity(String databaseName, Entity entity,List<Entity.data> dataList) {
-        this.databaseName = databaseName;
+    public CreateEntity( Entity entity) {
         this.entity = entity;
-        this.dataList=dataList;
     }
 
     public Entity createEntity(Entity entity) {
-        if (dataList.isEmpty()) {
-            return null;
-        }
         // 原来表名
-        entity.setTableName(entity.getTableName());
+        entity.tableName(entity.tableName());
         // 模块名称---解释使用
-        entity.setModuleName(entity.getModuleName());
+        entity.moduleName(entity.moduleName());
         // java类名称(首字母小写)
-        entity.setClassName(AutoCodeUtil.getBeanName(entity.getTableName()));
+        entity.className(AutoCodeUtil.getBeanName(entity.tableName()));
         // 基础包
-        entity.setBasePackage(AutoCodeConstant.basePackage);
+        entity.basePackage(AutoCodeConstant.basePackage);
         // 实体类包名
-        entity.setEntityPackage(AutoCodeConstant.basePackage + "." + AutoCodeConstant.entity);
-        entity.setDtoPackage(AutoCodeConstant.basePackage + "." + AutoCodeConstant.dto);
-        entity.setVoPackage(AutoCodeConstant.basePackage + "." + AutoCodeConstant.vo);
+        entity.entityPackage(AutoCodeConstant.basePackage + "." + AutoCodeConstant.entity);
+        entity.dtoPackage(AutoCodeConstant.basePackage + "." + AutoCodeConstant.dto);
+        entity.voPackage(AutoCodeConstant.basePackage + "." + AutoCodeConstant.vo);
         // dao类包名
-        entity.setDaoPackage(AutoCodeConstant.basePackage + "." + AutoCodeConstant.dao);
+        entity.daoPackage(AutoCodeConstant.basePackage + "." + AutoCodeConstant.dao);
         // service类包名
-        entity.setServicePackage(AutoCodeConstant.basePackage + "." + AutoCodeConstant.service);
+        entity.servicePackage(AutoCodeConstant.basePackage + "." + AutoCodeConstant.service);
         // serviceImpl类包名
-        entity.setServiceImplPackage(AutoCodeConstant.basePackage + "." + AutoCodeConstant.serviceImpl);
+        entity.serviceImplPackage(AutoCodeConstant.basePackage + "." + AutoCodeConstant.serviceImpl);
         // controller类包名
-        entity.setControllerPackage(AutoCodeConstant.basePackage + "." + AutoCodeConstant.controller);
-        List<Entity.data> data = dataList;
-        entity.setData(data);
-        //计算主键个数
-        long count = data.stream().filter(Entity.data::getId).count();
-        entity.setIdNumber((int) count);
+        entity.controllerPackage(AutoCodeConstant.basePackage + "." + AutoCodeConstant.controller);
         return entity;
     }
 
