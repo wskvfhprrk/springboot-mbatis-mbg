@@ -13,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @With
-@Accessors(fluent = true)
 public class Entity {
 
     private String tableName;
@@ -39,7 +38,6 @@ public class Entity {
     @NoArgsConstructor
     @AllArgsConstructor
     @With
-    @Accessors(fluent = true)
     public static class data {
         /**
          * 数据库备注——中文
