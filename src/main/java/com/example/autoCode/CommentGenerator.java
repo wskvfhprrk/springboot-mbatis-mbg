@@ -60,7 +60,7 @@ public class CommentGenerator extends DefaultCommentGenerator {
     @Override
     public void addModelClassComment(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         //代码自动生成——service和controller
-        Entity entity = new Entity(introspectedTable.getTableConfiguration().getTableName(), introspectedTable.getRemarks());
+        Entity entity = new Entity(introspectedTable.getFullyQualifiedTableNameAtRuntime(), introspectedTable.getRemarks());
         List<Entity.data> dataList=new ArrayList<>();
         //把主键参数添加进去——一般主键放在前面
         introspectedTable.getPrimaryKeyColumns().stream().forEach(c -> {
@@ -88,7 +88,7 @@ public class CommentGenerator extends DefaultCommentGenerator {
             data.setMaximumLength(String.valueOf(c.getLength()));
             dataList.add(data);
         });
-        CreateEntity createEntity = new CreateEntity(introspectedTable.getTableConfiguration().getTableName(), entity, dataList);
+        CreateEntity createEntity = new CreateEntity(introspectedTable.getFullyQualifiedTableNameAtRuntime(), entity, dataList);
         entity = createEntity.createEntity(entity);
         CreateCodeService createCodeService=new CreateCodeService();
         createCodeService.creatCode(entity);
