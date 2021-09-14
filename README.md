@@ -1,0 +1,2 @@
+# springboot-mbatis-mbg
+springboot使用mybatis的ORM代码自动生成mepper和model，同时使用freemarker生成serve和controller及vue后台管理页面
